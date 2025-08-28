@@ -41,10 +41,16 @@ export const useLogin = () => {
     onSuccess: (data: any) => {
       console.log("Réponse de l'API:", data);
       if (data.statusCode === 201) {
-        setCookie("access_token_gnawalma",data.data.token.access_token, {
+        setCookie("access_token_gnawalma", data.data.token.access_token, {
           maxAge: 60 * 60 * 5,
           path: "/",
         });
+        if (data?.data?.token?.refresh_token) {
+          setCookie("refresh_token_gnawalma", data.data.token.refresh_token, {
+            maxAge: 60 * 60 * 24 * 7,
+            path: "/",
+          });
+        }
         router.replace(nextUrl);
       } else {
         setErrorMessage(

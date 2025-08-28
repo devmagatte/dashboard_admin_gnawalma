@@ -38,7 +38,7 @@ export default function LoginPage() {
                   <div className="col-xl-12">
                     <div className="auth-form">
                       <div className="text-center mb-3">
-                        <a href=""><img src="/images/logo-full.png" alt="Gymove Logo" /></a>
+                        <a href=""><img src="/images/gnawalma/logo1.png" alt="Gymove Logo" /></a>
                       </div>
                       <h4 className="text-center mb-4">Sign in your account</h4>
                       {errorMessage && (

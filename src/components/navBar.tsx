@@ -1,13 +1,23 @@
+import { DASHBOARD, LOGIN } from '@/utils/constants/routeName'
+import { useAuth } from '@/utils/context/authContext';
+import { deleteCookie } from 'cookies-next';
+import router from 'next/router';
 import React from 'react'
+import dynamic from 'next/dynamic'
 
-export default function NavBar() {
+function NavBarInner() {
+	const {logoutContext} = useAuth();
+
+	const handleLogout = () => {
+		deleteCookie('access_token_cooporate');
+		logoutContext();
+		router.push(LOGIN);
+	  }
   return (
     <>
-         <div className="nav-header">
-            <a href="index.html" className="brand-logo" aria-label="Gymove">
-                <img className="logo-abbr" src="./images/logo.png" alt="" />
-                <img className="logo-compact" src="./images/logo-text.png" alt="" />
-                <img className="brand-title" src="./images/logo-text.png" alt="" />
+        <div className="nav-header">
+            <a href={DASHBOARD} className="brand-logo" aria-label="Gymove">
+                <img className="brand-title" src="./images/gnawalma/logo1.png" alt="" />
             </a>
             <div className="nav-control">
                 <div className="hamburger">
@@ -516,7 +526,7 @@ export default function NavBar() {
                     <div className="collapse navbar-collapse justify-content-between">
                         <div className="header-left">
                             <div className="dashboard_bar">
-								Dashboard
+								Tableau de bord
                             </div>
                         </div>
                         <ul className="navbar-nav header-right">
@@ -709,7 +719,7 @@ export default function NavBar() {
                                         <svg id="icon-inbox" xmlns="http://www.w3.org/2000/svg" className="text-success" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                                         <span className="ms-2">Inbox </span>
                                     </a>
-                                    <a href="page-login.html" className="dropdown-item ai-icon">
+                                    <a href="#" onClick={handleLogout} className="dropdown-item ai-icon">
                                         <svg id="icon-logout" xmlns="http://www.w3.org/2000/svg" className="text-danger" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                                         <span className="ms-2">Logout </span>
                                     </a>
@@ -723,3 +733,8 @@ export default function NavBar() {
     </>
   )
 }
+
+// Eviter l'hydratation côté serveur pour la chatbox/tabs bootstrap
+const NavBar = dynamic(() => Promise.resolve(NavBarInner), { ssr: false });
+
+export default NavBar;

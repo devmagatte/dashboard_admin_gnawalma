@@ -1,6 +1,35 @@
-import React from 'react'
+import { StatDashboard } from '@/hooks/dashboard/statDashboard';
+import type { IStatDashboard } from '@/types/dashboard/statDashbord';
+import React, { useEffect, useState } from 'react'
+import TopAtelier from './topAtelier';
 
 export default function Dashboard() {
+	const [dashboard, setDashboard] = useState<IStatDashboard | null>();
+
+	const { mutateAsync, errorMessage } = StatDashboard();
+  
+	const [loading, setLoading] = useState(false);
+
+	useEffect(() => {
+		fetchStateDashboard();
+	  }, []);
+	
+	  const fetchStateDashboard = async () => {
+		setLoading(true);
+		const result = await mutateAsync();
+	
+		try {
+		  if (result.data) {
+			setDashboard(result.data)
+		  }
+		} catch (error) {
+		  // errorMessage(error);
+		}finally {
+		   setTimeout(() => {
+			   setLoading(false);
+		   }, 1000);
+	   }
+	  }
   return (
     <>
         <div className="content-body default-height">
@@ -26,7 +55,7 @@ export default function Dashboard() {
 											</span>
 											<div className="media-body">
 												<p className="fs-14 mb-2">Weekly Progress</p>
-												<span className="title text-black font-w600">42%</span>
+												<span className="title text-black font-w600">{dashboard?.users.total} Couturiers</span>
 											</div>
 										</div>
 										<div className="progress" style={{height:"5px"}}>
@@ -50,8 +79,8 @@ export default function Dashboard() {
 												</svg>
 											</span>
 											<div className="media-body">
-												<p className="fs-14 mb-2">Weekly Running</p>
-												<span className="title text-black font-w600">42km</span>
+												<p className="fs-14 mb-2">Nombre d'Atéliers</p>
+												<span className="title text-black font-w600">{dashboard?.shops.total} Atéliers</span>
 											</div>
 										</div>
 										<div className="progress" style={{height:"5px"}}>
@@ -76,8 +105,8 @@ export default function Dashboard() {
 												</svg>
 											</span>
 											<div className="media-body">
-												<p className="fs-14 mb-2">Daily Cycling</p>
-												<span className="title text-black font-w600">230 Km</span>
+												<p className="fs-14 mb-2">Total commande</p>
+												<span className="title text-black font-w600">{dashboard?.orders.total} Commandes</span>
 											</div>
 										</div>
 										<div className="progress" style={{height:"5px"}}>
@@ -155,169 +184,7 @@ export default function Dashboard() {
 							</div>
 						</div>
 					</div>
-					<div className="col-xl-9 col-xxl-8">
-						<div className="row">
-							<div className="col-xl-12">	
-								<div className="card">
-									<div className="card-header d-sm-flex d-block pb-0 border-0">
-										<div className="me-auto pe-3">
-											<h4 className="text-black font-w600 fs-20">Recomended Trainer for You</h4>
-											<p className="fs-13 mb-0">Lorem ipsum dolor sit amet, consectetur</p>
-										</div>
-										<a href="food-menu.html" className="btn btn-primary rounded d-none d-md-block">View More</a>
-									</div>
-									<div className="card-body pt-2">
-										<div className="testimonial-one owl-carousel">
-											<div className="items">
-												<div className="card text-center">
-													<div className="card-body">
-														<img src="images/testimonial/1.jpg" alt="" />
-														<h5 className="fs-16 font-w500 mb-1"><a href="app-profile.html" className="text-black">Roberto Carloz</a></h5>
-														<p className="fs-14">Body Building Trainer</p>
-														<div className="d-flex align-items-center justify-content-center">
-															<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-																<path d="M5.09569 20C4.80437 19.9988 4.51677 19.9344 4.25273 19.8113C3.98868 19.6881 3.75447 19.5091 3.56624 19.2866C3.37801 19.0641 3.24024 18.8034 3.16243 18.5225C3.08462 18.2415 3.06862 17.9471 3.11554 17.6593L3.88905 12.8902L0.569441 9.45986C0.312024 9.19466 0.132451 8.86374 0.0503661 8.50328C-0.0317185 8.14282 -0.0131526 7.76671 0.104033 7.4161C0.221219 7.06549 0.43251 6.75388 0.714792 6.51537C0.997074 6.27685 1.33947 6.12062 1.70453 6.06376L6.20048 5.37325L8.18158 1.13817C8.34755 0.796915 8.60606 0.509234 8.92762 0.307978C9.24917 0.106721 9.6208 0 10.0001 0C10.3793 0 10.751 0.106721 11.0725 0.307978C11.3941 0.509234 11.6526 0.796915 11.8186 1.13817L13.7931 5.36719L18.2955 6.06376C18.6606 6.12062 19.003 6.27685 19.2852 6.51537C19.5675 6.75388 19.7788 7.06549 19.896 7.4161C20.0132 7.76671 20.0318 8.14282 19.9497 8.50328C19.8676 8.86374 19.688 9.19466 19.4306 9.45986L16.1144 12.8765L16.885 17.66C16.9463 18.0327 16.9014 18.4152 16.7556 18.7635C16.6097 19.1119 16.3687 19.4121 16.0602 19.6297C15.7517 19.8473 15.3882 19.9735 15.0113 19.994C14.6344 20.0144 14.2593 19.9281 13.9292 19.7451L10.0026 17.5635L6.07117 19.7451C5.77302 19.9118 5.43724 19.9996 5.09569 20Z" fill="#FFAA29"/>
-															</svg>
-															<span className="fs-14 d-block ms-2 pe-2 me-2 border-end text-black font-w500">4.4</span>
-															<a href="app-profile.html" className="btn-link fs-14">Send Request</a>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div className="items">
-												<div className="card text-center">
-													<div className="card-body">
-														<img src="images/testimonial/2.jpg" alt="" />
-														<h5 className="fs-16 font-w500 mb-1"><a href="app-profile.html" className="text-black">Cindy Moss</a></h5>
-														<p className="fs-14">Fat Belly Trainer</p>
-														<div className="d-flex align-items-center justify-content-center">
-															<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-																<path d="M5.09569 20C4.80437 19.9988 4.51677 19.9344 4.25273 19.8113C3.98868 19.6881 3.75447 19.5091 3.56624 19.2866C3.37801 19.0641 3.24024 18.8034 3.16243 18.5225C3.08462 18.2415 3.06862 17.9471 3.11554 17.6593L3.88905 12.8902L0.569441 9.45986C0.312024 9.19466 0.132451 8.86374 0.0503661 8.50328C-0.0317185 8.14282 -0.0131526 7.76671 0.104033 7.4161C0.221219 7.06549 0.43251 6.75388 0.714792 6.51537C0.997074 6.27685 1.33947 6.12062 1.70453 6.06376L6.20048 5.37325L8.18158 1.13817C8.34755 0.796915 8.60606 0.509234 8.92762 0.307978C9.24917 0.106721 9.6208 0 10.0001 0C10.3793 0 10.751 0.106721 11.0725 0.307978C11.3941 0.509234 11.6526 0.796915 11.8186 1.13817L13.7931 5.36719L18.2955 6.06376C18.6606 6.12062 19.003 6.27685 19.2852 6.51537C19.5675 6.75388 19.7788 7.06549 19.896 7.4161C20.0132 7.76671 20.0318 8.14282 19.9497 8.50328C19.8676 8.86374 19.688 9.19466 19.4306 9.45986L16.1144 12.8765L16.885 17.66C16.9463 18.0327 16.9014 18.4152 16.7556 18.7635C16.6097 19.1119 16.3687 19.4121 16.0602 19.6297C15.7517 19.8473 15.3882 19.9735 15.0113 19.994C14.6344 20.0144 14.2593 19.9281 13.9292 19.7451L10.0026 17.5635L6.07117 19.7451C5.77302 19.9118 5.43724 19.9996 5.09569 20Z" fill="#FFAA29"/>
-															</svg>
-															<span className="fs-14 d-block ms-2 pe-2 me-2 border-end text-black font-w500">4.4</span>
-															<a href="app-profile.html" className="btn-link fs-14">Send Request</a>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div className="items">
-												<div className="card text-center">
-													<div className="card-body">
-														<img src="images/testimonial/3.jpg" alt="" />
-														<h5 className="fs-16 font-w500 mb-1"><a href="app-profile.html" className="text-black">Ivankov Smurz</a></h5>
-														<p className="fs-14">Sixpack Builder</p>
-														<div className="d-flex align-items-center justify-content-center">
-															<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-																<path d="M5.09569 20C4.80437 19.9988 4.51677 19.9344 4.25273 19.8113C3.98868 19.6881 3.75447 19.5091 3.56624 19.2866C3.37801 19.0641 3.24024 18.8034 3.16243 18.5225C3.08462 18.2415 3.06862 17.9471 3.11554 17.6593L3.88905 12.8902L0.569441 9.45986C0.312024 9.19466 0.132451 8.86374 0.0503661 8.50328C-0.0317185 8.14282 -0.0131526 7.76671 0.104033 7.4161C0.221219 7.06549 0.43251 6.75388 0.714792 6.51537C0.997074 6.27685 1.33947 6.12062 1.70453 6.06376L6.20048 5.37325L8.18158 1.13817C8.34755 0.796915 8.60606 0.509234 8.92762 0.307978C9.24917 0.106721 9.6208 0 10.0001 0C10.3793 0 10.751 0.106721 11.0725 0.307978C11.3941 0.509234 11.6526 0.796915 11.8186 1.13817L13.7931 5.36719L18.2955 6.06376C18.6606 6.12062 19.003 6.27685 19.2852 6.51537C19.5675 6.75388 19.7788 7.06549 19.896 7.4161C20.0132 7.76671 20.0318 8.14282 19.9497 8.50328C19.8676 8.86374 19.688 9.19466 19.4306 9.45986L16.1144 12.8765L16.885 17.66C16.9463 18.0327 16.9014 18.4152 16.7556 18.7635C16.6097 19.1119 16.3687 19.4121 16.0602 19.6297C15.7517 19.8473 15.3882 19.9735 15.0113 19.994C14.6344 20.0144 14.2593 19.9281 13.9292 19.7451L10.0026 17.5635L6.07117 19.7451C5.77302 19.9118 5.43724 19.9996 5.09569 20Z" fill="#FFAA29"/>
-															</svg>
-															<span className="fs-14 d-block ms-2 pe-2 me-2 border-end text-black font-w500">4.4</span>
-															<a href="javascript:void(0)" className="btn-link fs-14">Send Request</a>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div className="items">
-												<div className="card text-center">
-													<div className="card-body">
-														<img src="images/testimonial/4.jpg" alt="" />
-														<h5 className="fs-16 font-w500 mb-1"><a href="app-profile.html" className="text-black">Louis Simatupang</a></h5>
-														<p className="fs-14">Body Building Trainer</p>
-														<div className="d-flex align-items-center justify-content-center">
-															<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-																<path d="M5.09569 20C4.80437 19.9988 4.51677 19.9344 4.25273 19.8113C3.98868 19.6881 3.75447 19.5091 3.56624 19.2866C3.37801 19.0641 3.24024 18.8034 3.16243 18.5225C3.08462 18.2415 3.06862 17.9471 3.11554 17.6593L3.88905 12.8902L0.569441 9.45986C0.312024 9.19466 0.132451 8.86374 0.0503661 8.50328C-0.0317185 8.14282 -0.0131526 7.76671 0.104033 7.4161C0.221219 7.06549 0.43251 6.75388 0.714792 6.51537C0.997074 6.27685 1.33947 6.12062 1.70453 6.06376L6.20048 5.37325L8.18158 1.13817C8.34755 0.796915 8.60606 0.509234 8.92762 0.307978C9.24917 0.106721 9.6208 0 10.0001 0C10.3793 0 10.751 0.106721 11.0725 0.307978C11.3941 0.509234 11.6526 0.796915 11.8186 1.13817L13.7931 5.36719L18.2955 6.06376C18.6606 6.12062 19.003 6.27685 19.2852 6.51537C19.5675 6.75388 19.7788 7.06549 19.896 7.4161C20.0132 7.76671 20.0318 8.14282 19.9497 8.50328C19.8676 8.86374 19.688 9.19466 19.4306 9.45986L16.1144 12.8765L16.885 17.66C16.9463 18.0327 16.9014 18.4152 16.7556 18.7635C16.6097 19.1119 16.3687 19.4121 16.0602 19.6297C15.7517 19.8473 15.3882 19.9735 15.0113 19.994C14.6344 20.0144 14.2593 19.9281 13.9292 19.7451L10.0026 17.5635L6.07117 19.7451C5.77302 19.9118 5.43724 19.9996 5.09569 20Z" fill="#FFAA29"/>
-															</svg>
-															<span className="fs-14 d-block ms-2 pe-2 me-2 border-end text-black font-w500">4.4</span>
-															<a href="app-profile.html" className="btn-link fs-14">Send Request</a>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div className="col-xl-12">	
-								<div className="card">
-									<div className="card-header d-sm-flex d-block pb-0 border-0">
-										<div className="me-auto pe-3">
-											<h4 className="text-black fs-20 font-w600">Calories Chart</h4>
-											<p className="fs-13 mb-0">Lorem ipsum dolor sit amet, consectetur</p>
-										</div>
-										<select className="default-select w-auto" aria-label="Default select example">
-										  <option selected>Weekly</option>
-										  <option value="1">Monthly</option>
-										  <option value="2">Daily</option>
-										  <option value="3">Yearly</option>
-										</select>
-									</div>
-									<div className="card-body px-3 pb-0">
-										<div id="chartTimeline"></div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div className="col-xl-3 col-xxl-4">
-						<div className="row">
-							<div className="col-xl-12">
-								<div className="card featuredMenu">
-									<div className="card-header border-0">
-										<h4 className="text-black font-w600 fs-20 mb-0">Featured Diet Menu</h4>
-									</div>
-									<div className="card-body loadmore-content height700 dz-scroll pt-0" id="FeaturedMenusContent">
-										<div className="media mb-4">
-											<img src="images/menus/1.png" width="85" alt="" className="rounded me-3" />
-											<div className="media-body">
-												<h5><a href="food-menu.html" className="text-black fs-16">Chinese Orange Fruit With Avocado Salad</a></h5>
-												<span className="fs-14 text-primary font-w500">Kevin Ignis</span>
-											</div>
-										</div>
-										<ul className="d-flex flex-wrap pb-2 border-bottom mb-3 justify-content-between">
-											<li className="me-3 mb-2"><i className="las la-clock scale5 me-2"></i><span className="fs-14 text-black">4-6 mins </span></li>
-											<li className="mb-2"><i className="fa-regular fa-star me-2 scale1 text-warning" aria-hidden="true"></i><span className="fs-14 text-black font-w500">176 Reviews</span></li>
-										</ul>
-										<div className="media mb-4">
-											<img src="images/menus/2.png" width="85" alt="" className="rounded me-3" />
-											<div className="media-body">
-												<h5><a href="food-menu.html" className="text-black fs-16">Fresh or Frozen (No Sugar Added) Fruits</a></h5>
-												<span className="fs-14 text-primary font-w500">Olivia Johanson</span>
-											</div>
-										</div>
-										<ul className="d-flex flex-wrap pb-2 border-bottom mb-3 justify-content-between">
-											<li className="me-3 mb-2"><i className="las la-clock scale5 me-2"></i><span className="fs-14 text-black">4-6 mins </span></li>
-											<li className="mb-2"><i className="fa-regular fa-star me-2 scale1 text-warning" aria-hidden="true"></i><span className="fs-14 text-black font-w500">176 Reviews</span></li>
-										</ul>
-										<div className="media mb-4">
-											<img src="images/menus/3.png" width="85" alt="" className="rounded me-3" />
-											<div className="media-body">
-												<h5><a href="food-menu.html" className="text-black fs-16">Fresh or Frozen (No Sugar Added) Fruits</a></h5>
-												<span className="fs-14 text-primary font-w500">Stefanny Raharjo</span>
-											</div>
-										</div>
-										<ul className="d-flex flex-wrap pb-2 border-bottom mb-3 justify-content-between">
-											<li className="me-3 mb-2"><i className="las la-clock scale5 me-2"></i><span className="fs-14 text-black">4-6 mins </span></li>
-											<li className="mb-2"><i className="fa-regular fa-star me-2 scale1 text-warning" aria-hidden="true"></i><span className="fs-14 text-black font-w500">176 Reviews</span></li>
-										</ul>
-										<div className="media mb-4">
-											<img src="images/menus/4.png" width="85" alt="" className="rounded me-3" />
-											<div className="media-body">
-												<h5><a href="food-menu.html" className="text-black fs-16">Original Boiled Egg with Himalaya Salt</a></h5>
-												<span className="fs-14 text-primary font-w500">Peter Parkur</span>
-											</div>
-										</div>
-										<ul className="d-flex flex-wrap pb-2 border-bottom mb-3 justify-content-between">
-											<li className="me-3 mb-2"><i className="las la-clock scale5 me-2"></i><span className="fs-14 text-black">4-6 mins </span></li>
-											<li className="mb-2"><i className="fa-regular fa-star me-2 scale1 text-warning" aria-hidden="true"></i><span className="fs-14 text-black font-w500">176 Reviews</span></li>
-										</ul>
-									</div>
-									<div className="card-footer style-1 text-center border-0 pt-0 pb-4">
-										<a className="text-primary dz-load-more fa fa-chevron-down" aria-label="Featured-icon" id="FeaturedMenus" href="javascript:void(0);" rel="ajax/featured-menu-list.html">
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+					<TopAtelier />
 				</div>
             </div>
         </div>

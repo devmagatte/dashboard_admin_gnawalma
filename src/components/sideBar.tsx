@@ -1,26 +1,24 @@
+import { COUTURIERS, DASHBOARD } from '@/utils/constants/routeName'
 import React from 'react'
+import dynamic from 'next/dynamic'
 
-export default function SideBar() {
+function SideBarInner() {
   return (
     <>
     <div className="deznav">
             <div className="deznav-scroll">
 				<ul className="metismenu" id="menu">
-                    <li><a className="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                    <li><a className="ai-icon" href={DASHBOARD} aria-expanded="false">
 							<i className="flaticon-381-networking"></i>
-							<span className="nav-text">Dashboard</span>
+							<span className="nav-text">Tableau de board</span>
 						</a>
-                        <ul aria-expanded="false">
-							<li><a href="index.html">Dashboard</a></li>
-							<li><a href="index-2.html">Dashboard Dark<span className="badge badge-xs badge-danger ms-1">New</span></a></li>
-							<li><a href="workout-statistic.html">Workout Statistic</a></li>
-							<li><a href="workoutplan.html">Workout Plan</a></li>
-							<li><a href="distance-map.html">Distance Map</a></li>
-							<li><a href="food-menu.html">Diet Food Menu</a></li>
-							<li><a href="personal-record.html">Personal Record</a></li>
-						</ul>
                     </li>
-					<li><a className="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                    <li><a href={COUTURIERS} className="ai-icon" aria-expanded="false">
+							<i className="flaticon-381-settings-2"></i>
+							<span className="nav-text">Les Couturiers</span>
+						</a>
+					</li>
+					{/* <li><a className="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i className="flaticon-381-television"></i>
 							<span className="nav-text">Apps</span>
 						</a>
@@ -169,7 +167,7 @@ export default function SideBar() {
                             </li>
                             <li><a href="page-lock-screen.html">Lock Screen</a></li>
                         </ul>
-                    </li>
+                    </li> */}
                 </ul>
 				<div className="add-menu-sidebar">
 					<img src="images/calendar.png" alt="" className="me-3" />
@@ -184,3 +182,7 @@ export default function SideBar() {
     </>
   )
 }
+
+const SideBar = dynamic(() => Promise.resolve(SideBarInner), { ssr: false });
+
+export default SideBar;
