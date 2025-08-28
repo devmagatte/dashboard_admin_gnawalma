@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useLogin } from '@/hooks/auth/useLogin';
+import { useAuth } from '@/utils/context/authContext';
+import LoginLayout from '@/components/layout/loginLayout';
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('hello@example.com');
-  const [password, setPassword] = useState('123456');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const router = useRouter();
+  const { mutate, errorMessage } = useLogin();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle login logic here
-    console.log('Login attempt:', { email, password, rememberMe });
-    // Redirect to dashboard after successful login
-    router.push('/dashboard');
+    mutate({ email, password });
   };
 
   return (
@@ -36,9 +38,14 @@ export default function LoginPage() {
                   <div className="col-xl-12">
                     <div className="auth-form">
                       <div className="text-center mb-3">
-                        <a href="/"><img src="/images/logo-full.png" alt="Gymove Logo" /></a>
+                        <a href=""><img src="/images/logo-full.png" alt="Gymove Logo" /></a>
                       </div>
                       <h4 className="text-center mb-4">Sign in your account</h4>
+                      {errorMessage && (
+                        <div className="alert alert-danger" role="alert">
+                          {errorMessage}
+                        </div>
+                      )}
                       <form onSubmit={handleSubmit}>
                         <div className="form-group">
                           <label className="mb-1 form-label">Email</label>
@@ -94,7 +101,7 @@ export default function LoginPage() {
                         </div>
                       </form>
                       <div className="new-account mt-3">
-                        <p>Don't have an account? <a className="text-primary" href="/register">Sign up</a></p>
+                        <p>Don&apos;t have an account? <a className="text-primary" href="/register">Sign up</a></p>
                       </div>
                     </div>
                   </div>
@@ -107,3 +114,10 @@ export default function LoginPage() {
     </>
   );
 }
+LoginPage.getLayout = function getLayout(page: React.ReactElement) {
+  return (
+      <LoginLayout>
+          {page}
+      </LoginLayout>
+  );
+};

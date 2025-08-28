@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
     useEffect(() => {
-        const token = getCookie("access_token_cooporate");
+        const token = getCookie("access_token_gnawalma");
         if (token) {
             setIsAuthenticated(true);
         }
