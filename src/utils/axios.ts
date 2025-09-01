@@ -1,29 +1,45 @@
 import axios, { AxiosError, AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 import { getCookie, setCookie, deleteCookie } from "cookies-next";
+import Router from "next/router";
 
-// Utiliser le proxy local pour éviter les problèmes CORS
+// =======================
+// Constantes
+// =======================
+const ACCESS_TOKEN_KEY = "access_token_gnawalma";
+const REFRESH_TOKEN_KEY = "refresh_token_gnawalma";
+
 const baseURL = `${process.env.NEXT_PUBLIC_API_URL}`;
+
 const AxiosInstance = axios.create({
-  baseURL: baseURL,
+  baseURL,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-AxiosInstance.interceptors.request.use(
-  function (config: InternalAxiosRequestConfig) {
-    const token = getCookie("access_token_gnawalma");
-    if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
-    }
-    return config;
-  },
-  function (error) {
-    return Promise.reject(error);
+// =======================
+// Helpers Tokens
+// =======================
+function saveTokens(access: string, refresh?: string, expiration?: string) {
+  setCookie(ACCESS_TOKEN_KEY, access, { maxAge: 60 * 60 * 5, path: "/" });
+  if (refresh) {
+    setCookie(REFRESH_TOKEN_KEY, refresh, { maxAge: 60 * 60 * 24 * 7, path: "/" });
   }
-);
 
-// Refresh token logic
+  if (expiration) {
+    // ⚡ Tu peux garder ça si tu veux gérer un refresh proactif
+    console.log("Expiration du token :", expiration);
+  }
+}
+
+function clearTokens() {
+  deleteCookie(ACCESS_TOKEN_KEY);
+  deleteCookie(REFRESH_TOKEN_KEY);
+}
+
+// =======================
+// File d’attente pendant refresh
+// =======================
 let isRefreshing = false;
 let pendingQueue: Array<{
   resolve: (value?: unknown) => void;
@@ -41,9 +57,32 @@ function processQueue(error: unknown, token: string | null) {
   pendingQueue = [];
 }
 
+// =======================
+// Intercepteur Requête
+// =======================
+AxiosInstance.interceptors.request.use(
+  function (config: InternalAxiosRequestConfig) {
+    const token = getCookie(ACCESS_TOKEN_KEY);
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
+
+// =======================
+// Intercepteur Réponse
+// =======================
 AxiosInstance.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
+    if (!error.config) {
+      return Promise.reject(error);
+    }
+
     const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };
     const status = error.response?.status;
 
@@ -51,7 +90,7 @@ AxiosInstance.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    // Eviter boucles
+    // Marquer comme déjà retenté pour éviter une boucle infinie
     originalRequest._retry = true;
 
     if (isRefreshing) {
@@ -68,30 +107,29 @@ AxiosInstance.interceptors.response.use(
     }
 
     isRefreshing = true;
+
     try {
-      const refreshToken = getCookie("refresh_token_gnawalma");
+      const refreshToken = getCookie(REFRESH_TOKEN_KEY);
       if (!refreshToken) {
         throw new Error("Missing refresh token");
       }
 
-      // Adapter l'endpoint si nécessaire côté API
+      // Appel refresh token
       const refreshResponse = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/admin/refresh`,
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/user/refresh-tokens`,
         { refresh_token: refreshToken },
         { headers: { "Content-Type": "application/json" } }
       );
 
       const newAccess: string | undefined = refreshResponse?.data?.data?.token?.access_token;
       const newRefresh: string | undefined = refreshResponse?.data?.data?.token?.refresh_token;
+      const expiration: string | undefined = refreshResponse?.data?.data?.token?.expiration_token;
 
       if (!newAccess) {
         throw new Error("No access token in refresh response");
       }
 
-      setCookie("access_token_gnawalma", newAccess, { maxAge: 60 * 60 * 5, path: "/" });
-      if (newRefresh) {
-        setCookie("refresh_token_gnawalma", newRefresh, { maxAge: 60 * 60 * 24 * 7, path: "/" });
-      }
+      saveTokens(newAccess, newRefresh, expiration);
 
       processQueue(null, newAccess);
 
@@ -102,9 +140,11 @@ AxiosInstance.interceptors.response.use(
       return AxiosInstance(originalRequest);
     } catch (refreshErr) {
       processQueue(refreshErr, null);
-      // Nettoyage des cookies si refresh échoue
-      deleteCookie("access_token_gnawalma");
-      deleteCookie("refresh_token_gnawalma");
+      clearTokens();
+
+      // 🔄 Redirection optionnelle vers login
+      Router.push("");
+
       return Promise.reject(refreshErr);
     } finally {
       isRefreshing = false;

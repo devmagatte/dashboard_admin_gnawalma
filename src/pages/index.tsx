@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useLogin } from '@/hooks/auth/useLogin';
-import { useAuth } from '@/utils/context/authContext';
 import LoginLayout from '@/components/layout/loginLayout';
 
 export default function LoginPage() {
@@ -22,7 +21,7 @@ export default function LoginPage() {
   return (
     <>
       <Head>
-        <title>Gymove - Fitness Bootstrap Admin Dashboard Template</title>
+        <title>Login</title>
         <meta name="description" content="Discover Gymove, the ultimate fitness solution that is designed to help you achieve a healthier lifestyle with its cutting-edge features and personalized programs." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png" />
