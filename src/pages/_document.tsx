@@ -6,13 +6,15 @@ class MyDocument extends Document {
         return (
             <Html lang="en" className="h-100">
                 <Head>
+                    <title>Gnawalma Pro</title>
                     <meta name="viewport" content="width=device-width, initial-scale=1" />
                     <meta charSet="UTF-8" />
                     <link rel="shortcut icon" href="/assets/img/paygo/flatpaygo.png" type="image/x-icon" />
-                    <title>Gnawalma Pro</title>
                     <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css" />
                     <link rel="stylesheet" href="/vendor/bootstrap-select/css/bootstrap-select.min.css" />
                     <link rel="stylesheet" href="/css/style.css" />
+                    <Script src="/vendor/global/global.min.js" strategy="beforeInteractive"></Script>
+                    <Script src="/vendor/bootstrap-select/js/bootstrap-select.min.js" strategy="beforeInteractive"></Script>
                 </Head>
                 <body className="h-100">
                     <Main />

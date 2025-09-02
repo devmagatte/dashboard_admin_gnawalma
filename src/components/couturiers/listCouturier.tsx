@@ -1,5 +1,5 @@
 import { ListCouturier } from '@/hooks/couturier/listCouturier';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import ReactPaginate from 'react-paginate';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -15,11 +15,7 @@ export default function ListCouturierComp() {
   const [loading, setLoading] = useState(false);
   const [types, setTypes] = useState<'ADMIN_SHOP' | 'ASSISTANT'>('ADMIN_SHOP');
 
-  useEffect(() => {
-    fetchCouturiers(currentPage + 1);
-  }, [currentPage, types]);
-
-  const fetchCouturiers = async (page: number) => {
+  const fetchCouturiers = useCallback(async (page: number) => {
     setLoading(true);
     try {
       const result = await mutateAsync({ type: types, page, limit: couturiersPerPage });
@@ -35,7 +31,11 @@ export default function ListCouturierComp() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [mutateAsync, types, couturiersPerPage]);
+
+  useEffect(() => {
+    fetchCouturiers(currentPage + 1);
+  }, [currentPage, fetchCouturiers]);
 
   const handlePageClick = (data: { selected: number }) => {
     setCurrentPage(data.selected);

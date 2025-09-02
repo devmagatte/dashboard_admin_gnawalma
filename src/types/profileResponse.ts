@@ -4,10 +4,6 @@ interface IUser {
   type: string;
 }
 
-interface Session {
-  device: string;
-  at: string;
-}
 
 type ProfileadminResponse = {
   statusCode: number;

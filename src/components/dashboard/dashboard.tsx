@@ -2,8 +2,7 @@ import { StatDashboard } from '@/hooks/dashboard/statDashboard';
 import type { IStatDashboard } from '@/types/dashboard/statDashbord';
 import React, { useEffect, useState } from 'react'
 import TopAtelier from './topAtelier';
-import { MdOutlineAttachMoney } from 'react-icons/md';
-import { GiPayMoney, GiTakeMyMoney } from 'react-icons/gi';
+import { GiTakeMyMoney } from 'react-icons/gi';
 
 export default function Dashboard() {
 	const [dashboard, setDashboard] = useState<IStatDashboard | null>();
@@ -81,7 +80,7 @@ export default function Dashboard() {
 												</svg>
 											</span>
 											<div className="media-body">
-												<p className="fs-14 mb-2">Nombre d'Atéliers</p>
+												<p className="fs-14 mb-2">Nombre d&apos;Atéliers</p>
 												<span className="title text-black font-w600">{dashboard?.shops.total} Atéliers</span>
 											</div>
 										</div>

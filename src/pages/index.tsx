@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import { useLogin } from '@/hooks/auth/useLogin';
 import LoginLayout from '@/components/layout/loginLayout';
 
@@ -9,7 +8,6 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const router = useRouter();
   const { mutate, errorMessage } = useLogin();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -22,7 +20,7 @@ export default function LoginPage() {
     
     <>
       <Head>
-        <title>Login</title>
+        <title>Connexion</title>
         <meta name="login" content="page de connexion" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="shortcut icon" type="image/x-icon" href="/images/gnawalma/logo1.png" />
