@@ -1,4 +1,8 @@
-import axios, { AxiosError, AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
+import axios, {
+  AxiosError,
+  AxiosRequestConfig,
+  InternalAxiosRequestConfig,
+} from "axios";
 import { getCookie, setCookie, deleteCookie } from "cookies-next";
 import Router from "next/router";
 
@@ -23,7 +27,10 @@ const AxiosInstance = axios.create({
 function saveTokens(access: string, refresh?: string, expiration?: string) {
   setCookie(ACCESS_TOKEN_KEY, access, { maxAge: 60 * 60 * 5, path: "/" });
   if (refresh) {
-    setCookie(REFRESH_TOKEN_KEY, refresh, { maxAge: 60 * 60 * 24 * 7, path: "/" });
+    setCookie(REFRESH_TOKEN_KEY, refresh, {
+      maxAge: 60 * 60 * 24 * 7,
+      path: "/",
+    });
   }
 
   if (expiration) {
@@ -83,7 +90,9 @@ AxiosInstance.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };
+    const originalRequest = error.config as AxiosRequestConfig & {
+      _retry?: boolean;
+    };
     const status = error.response?.status;
 
     if (status !== 401 || originalRequest._retry) {
@@ -121,9 +130,12 @@ AxiosInstance.interceptors.response.use(
         { headers: { "Content-Type": "application/json" } }
       );
 
-      const newAccess: string | undefined = refreshResponse?.data?.data?.token?.access_token;
-      const newRefresh: string | undefined = refreshResponse?.data?.data?.token?.refresh_token;
-      const expiration: string | undefined = refreshResponse?.data?.data?.token?.expiration_token;
+      const newAccess: string | undefined =
+        refreshResponse?.data?.data?.token?.access_token;
+      const newRefresh: string | undefined =
+        refreshResponse?.data?.data?.token?.refresh_token;
+      const expiration: string | undefined =
+        refreshResponse?.data?.data?.token?.expiration_token;
 
       if (!newAccess) {
         throw new Error("No access token in refresh response");
