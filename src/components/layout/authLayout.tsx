@@ -12,11 +12,11 @@ const AuthLayout = ({ children }: Props) => {
     <Script src="/vendor/bootstrap-select/js/bootstrap-select.min.js" strategy='beforeInteractive'></Script>
     <Script src="/vendor/owl-carousel/owl.carousel.js" strategy="beforeInteractive"></Script>
     <Script src="/vendor/peity/jquery.peity.min.js" strategy="beforeInteractive"></Script>
-    <Script src="/vendor/chart-js/chart.bundle.min.js" strategy="afterInteractive"></Script>
-    <Script src="/vendor/apexchart/apexchart.js" strategy="afterInteractive"></Script>
+    <Script src="/vendor/chart-js/chart.bundle.min.js" strategy="beforeInteractive"></Script>
+    <Script src="/vendor/apexchart/apexchart.js" strategy="beforeInteractive"></Script>
+    <Script src="/js/deznav-init.js" strategy="beforeInteractive"></Script>
     <Script src="/js/custom.min.js" strategy="afterInteractive"></Script>
     <Script src="/js/dashboard/dashboard-1.js" strategy="afterInteractive"></Script>
-    <Script src="/js/deznav-init.js" strategy="afterInteractive"></Script>
     <div>
       <main>{children}</main>
     </div>

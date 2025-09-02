@@ -11,8 +11,8 @@ const LoginLayout = ({ children }: Props) => {
     <>  
         <Script src="/vendor/global/global.min.js" strategy="beforeInteractive"></Script>
         <Script src="/vendor/bootstrap-select/js/bootstrap-select.min.js" strategy="beforeInteractive"></Script>
-        <Script src="/js/custom.min.js" strategy="afterInteractive"></Script>
-        <Script src="/js/deznav-init.js" strategy="afterInteractive"></Script>
+        <Script src="/js/deznav-init.js" strategy="beforeInteractive"></Script>
+        <Script src="/js/custom.min.js" strategy="beforeInteractive"></Script>
       <div >
         <main>{children}</main>
       </div>

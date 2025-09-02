@@ -16,10 +16,12 @@ export default function index() {
         </div>
     </div>
     <div>
-        <NavBar />
-        <SideBar />
-        <ListCouturierComp />
-        <Footer />
+        <div id="main-wrapper">
+            <NavBar />
+            <SideBar />
+            <ListCouturierComp />
+            <Footer />
+        </div>
     </div>
     </>
   )

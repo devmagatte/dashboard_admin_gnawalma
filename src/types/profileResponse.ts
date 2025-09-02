@@ -1,7 +1,7 @@
-interface User {
+interface IUser {
   name: string;
   email: string;
-  authorizations: any;
+  type: string;
 }
 
 interface Session {
@@ -12,5 +12,5 @@ interface Session {
 type ProfileadminResponse = {
   statusCode: number;
   message: string;
-  data: User;
+  data: IUser;
 };

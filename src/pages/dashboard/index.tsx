@@ -16,10 +16,12 @@ export default function dashboard() {
         </div>
     </div>
     <div>
-        <NavBar />
-        <SideBar />
-        <Dashboard />
-        <Footer />
+        <div id="main-wrapper">
+            <NavBar />
+            <SideBar />
+            <Dashboard />
+            <Footer />
+        </div>
     </div>
     </>
   )

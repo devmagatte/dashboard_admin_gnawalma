@@ -19,12 +19,13 @@ export default function LoginPage() {
   };
 
   return (
+    
     <>
       <Head>
         <title>Login</title>
-        <meta name="description" content="Discover Gymove, the ultimate fitness solution that is designed to help you achieve a healthier lifestyle with its cutting-edge features and personalized programs." />
+        <meta name="login" content="page de connexion" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png" />
+        <link rel="shortcut icon" type="image/x-icon" href="/images/gnawalma/logo1.png" />
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet" />
       </Head>
 
@@ -39,7 +40,7 @@ export default function LoginPage() {
                       <div className="text-center mb-3">
                         <a href=""><img src="/images/gnawalma/logo1.png" alt="Gymove Logo" /></a>
                       </div>
-                      <h4 className="text-center mb-4">Sign in your account</h4>
+                      <h4 className="text-center mb-4">Connectez-vous à votre compte</h4>
                       {errorMessage && (
                         <div className="alert alert-danger" role="alert">
                           {errorMessage}
@@ -85,23 +86,17 @@ export default function LoginPage() {
                                 onChange={(e) => setRememberMe(e.target.checked)}
                               />
                               <label className="form-check-label" htmlFor="basic_checkbox_1">
-                                Remember my preference
+                                Se souvenir de moi
                               </label>
                             </div>
-                          </div>
-                          <div className="form-group">
-                            <a href="/forgot-password">Forgot Password?</a>
                           </div>
                         </div>
                         <div className="text-center">
                           <button type="submit" className="btn btn-primary light btn-block">
-                            Sign Me In
+                            Connexion
                           </button>
                         </div>
                       </form>
-                      <div className="new-account mt-3">
-                        <p>Don&apos;t have an account? <a className="text-primary" href="/register">Sign up</a></p>
-                      </div>
                     </div>
                   </div>
                 </div>

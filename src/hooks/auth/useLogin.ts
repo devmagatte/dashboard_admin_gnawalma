@@ -19,12 +19,10 @@ export const useLogin = () => {
 
   const loginMutation = useMutation<LoginResponse, unknown, LoginVariables>({
     mutationFn: async ({ email, password }) => {
-      // Validation des données
       if (!email || !password) {
         throw new Error("Email et mot de passe sont requis");
       }
 
-      // Nettoyer et valider l'email
       const cleanEmail = email.trim().toLowerCase();
       if (!cleanEmail.includes('@')) {
         throw new Error("Format d'email invalide");
@@ -45,6 +43,10 @@ export const useLogin = () => {
           maxAge: 60 * 60 * 5,
           path: "/",
         });
+        setCookie("profil_paygo_gnawalma", data.data.user, {
+          maxAge: 60 * 60 * 5,
+          path: "/",
+        });
         if (data?.data?.token?.refresh_token) {
           setCookie("refresh_token_gnawalma", data.data.token.refresh_token, {
             maxAge: 60 * 60 * 24 * 7,
@@ -61,10 +63,7 @@ export const useLogin = () => {
     onError: (error: any) => {
       console.error("Erreur de connexion:", error);
       
-      // Afficher les détails de l'erreur pour le débogage
       if (error.response) {
-        console.log("Status:", error.response.status);
-        console.log("Data:", error.response.data);
         setErrorMessage(
           error.response.data?.message || 
           `Erreur ${error.response.status}: ${error.response.statusText}`

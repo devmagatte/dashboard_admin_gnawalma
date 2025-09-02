@@ -5,7 +5,7 @@ export default function Footer() {
     <>
     <footer className="footer">
             <div className="copyright">
-                  <p>Copyright © Designed &amp; Developed by <a href="/" target="_blank">Gnawalma Pro</a> 2023</p>
+                  <p>Copyright © Designed &amp; Developed by <a href="/" target="_blank">Gnawalma Pro</a> 2025</p>
             </div>
         </footer>
     </>
