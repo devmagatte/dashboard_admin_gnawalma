@@ -55,7 +55,7 @@ export default function Dashboard() {
 												</svg>
 											</span>
 											<div className="media-body">
-												<p className="fs-14 mb-2">Weekly Progress</p>
+												<p className="fs-14 mb-2">Couturiers</p>
 												<span className="title text-black font-w600">{dashboard?.users.total} Couturiers</span>
 											</div>
 										</div>
@@ -140,9 +140,72 @@ export default function Dashboard() {
 									<div className="effect bg-warning"></div>
 								</div>
 							</div>
+							<div className="col-sm-6">
+								<div className="card avtivity-card">
+									<div className="card-body">
+										<div className="media align-items-center">
+											<span className="activity-icon bgl-warning  me-md-4 me-3">
+												<GiTakeMyMoney  height={200}/>
+											</span>
+											<div className="media-body">
+												<p className="fs-14 mb-2">Abonnement {dashboard?.subscriptions.byType[0].name}</p>
+												<span className="title text-black font-w600">{dashboard?.subscriptions.byType[0].count}</span>
+											</div>
+										</div>
+										<div className="progress" style={{height:"5px"}}>
+											<div className="progress-bar bg-warning" style={{width: "42%", height:"5px"}} role="progressbar">
+												<span className="sr-only">42% Complete</span>
+											</div>
+										</div>
+									</div>
+									<div className="effect bg-warning"></div>
+								</div>
+							</div>
+							<div className="col-sm-6">
+								<div className="card avtivity-card">
+									<div className="card-body">
+										<div className="media align-items-center">
+											<span className="activity-icon bgl-warning  me-md-4 me-3">
+												<GiTakeMyMoney  height={200}/>
+											</span>
+											<div className="media-body">
+												<p className="fs-14 mb-2">Abonnement {dashboard?.subscriptions.byType[1].name}</p>
+												<span className="title text-black font-w600">{dashboard?.subscriptions.byType[1].count}</span>
+											</div>
+										</div>
+										<div className="progress" style={{height:"5px"}}>
+											<div className="progress-bar bg-warning" style={{width: "42%", height:"5px"}} role="progressbar">
+												<span className="sr-only">42% Complete</span>
+											</div>
+										</div>
+									</div>
+									<div className="effect bg-warning"></div>
+								</div>
+							</div>
+							<div className="col-sm-6">
+								<div className="card avtivity-card">
+									<div className="card-body">
+										<div className="media align-items-center">
+											<span className="activity-icon bgl-warning  me-md-4 me-3">
+												<GiTakeMyMoney  height={200}/>
+											</span>
+											<div className="media-body">
+												<p className="fs-14 mb-2">Abonnement {dashboard?.subscriptions.byType[2].name}</p>
+												<span className="title text-black font-w600">{dashboard?.subscriptions.byType[2].count}</span>
+											</div>
+										</div>
+										<div className="progress" style={{height:"5px"}}>
+											<div className="progress-bar bg-warning" style={{width: "42%", height:"5px"}} role="progressbar">
+												<span className="sr-only">42% Complete</span>
+											</div>
+										</div>
+									</div>
+									<div className="effect bg-warning"></div>
+								</div>
+							</div>
 						</div>
 					</div>
-					<div className="col-xl-6 col-xxl-12">
+					{/* <div className="col-xl-6 col-xxl-12">
 						<div className="card">
 							<div className="card-header d-sm-flex d-block pb-0 border-0">
 								<div className="me-auto pe-3 mb-sm-0 mb-3">
@@ -178,7 +241,7 @@ export default function Dashboard() {
 								<div id="chartBar"></div>
 							</div>
 						</div>
-					</div>
+					</div> */}
 					<TopAtelier />
 				</div>
             </div>

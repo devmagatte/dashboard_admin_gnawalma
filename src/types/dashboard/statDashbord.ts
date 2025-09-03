@@ -28,18 +28,19 @@ export interface IOrders {
     recentOrders: number;
 }
 
+
+
 export interface ISubscriptions {
-    active: number ;
-    expired: number;
-    totalRevenue: number;
-    byType: [
-        {
-            name: string;
-            count: number;
-            revenue: number;
-        }
-    ]
+  active: number;
+  expired: number;
+  totalRevenue: number;
+  byType: Array<{
+    name: string;
+    count: number;
+    revenue: number;
+  }>;
 }
+
 export interface ITransactions {
     total: number;
     totalAmount: number;
