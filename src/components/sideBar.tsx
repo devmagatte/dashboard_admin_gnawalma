@@ -1,4 +1,4 @@
-import { COUTURIERS, DASHBOARD } from '@/utils/constants/routeName'
+import { ACTIVITES_RECENTES, COUTURIERS, DASHBOARD } from '@/utils/constants/routeName'
 import React from 'react'
 import dynamic from 'next/dynamic'
 
@@ -16,6 +16,11 @@ function SideBarInner() {
                     <li><a href={COUTURIERS} className="ai-icon" aria-expanded="false">
 							<i className="flaticon-381-settings-2"></i>
 							<span className="nav-text">Les Couturiers</span>
+						</a>
+					</li>
+					<li><a href={ACTIVITES_RECENTES} className="ai-icon" aria-expanded="false">
+							<i className="flaticon-381-compact-disc-1"></i>
+							<span className="nav-text">Activités récentes</span>
 						</a>
 					</li>
 					

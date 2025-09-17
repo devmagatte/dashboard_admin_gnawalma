@@ -28,7 +28,7 @@ export default function TopAtelier() {
     };
   return (
     <>
-         <div className="row">
+        <div className="row">
             <div className="col-lg-12">
                 <div className="card">
                     <div className="card-header">
@@ -55,7 +55,7 @@ export default function TopAtelier() {
                                                 <td>{topAtelier.name}</td>
                                                 <td>{topAtelier._count.clients}</td>
                                                 <td>{topAtelier._count.orders}</td>
-                                                <td><span className="badge light badge-success">{topAtelier.createdAt}</span></td>
+                                                <td><span className="badge light badge-success">{new Date(topAtelier.createdAt).toLocaleDateString('fr-FR')}</span></td>
                                                 <td>
                                                     <div className="dropdown">
                                                         <button type="button" className="btn btn-success light sharp" data-bs-toggle="dropdown">

@@ -36,9 +36,9 @@ export default function Dashboard() {
         <div className="content-body default-height">
 			<div className="container-fluid">
 				<div className="row">
-					<div className="col-xl-6 col-xxl-12">
+					<div className="col-xl-12 col-xxl-12">
 						<div className="row">
-							<div className="col-sm-6">
+							<div className="col-sm-4">
 								<div className="card avtivity-card">
 									<div className="card-body">
 										<div className="media align-items-center">
@@ -68,7 +68,7 @@ export default function Dashboard() {
 									<div className="effect bg-success"></div>
 								</div>
 							</div>
-							<div className="col-sm-6">
+							<div className="col-sm-4">
 								<div className="card avtivity-card">
 									<div className="card-body">
 										<div className="media align-items-center">
@@ -93,7 +93,7 @@ export default function Dashboard() {
 									<div className="effect bg-secondary"></div>
 								</div>
 							</div>
-							<div className="col-sm-6">
+							<div className="col-sm-4">
 								<div className="card avtivity-card">
 									<div className="card-body">
 										<div className="media align-items-center">
@@ -119,7 +119,7 @@ export default function Dashboard() {
 									<div className="effect bg-danger"></div>
 								</div>
 							</div>
-							<div className="col-sm-6">
+							<div className="col-sm-4">
 								<div className="card avtivity-card">
 									<div className="card-body">
 										<div className="media align-items-center">
@@ -140,7 +140,7 @@ export default function Dashboard() {
 									<div className="effect bg-warning"></div>
 								</div>
 							</div>
-							<div className="col-sm-6">
+							<div className="col-sm-4">
 								<div className="card avtivity-card">
 									<div className="card-body">
 										<div className="media align-items-center">
@@ -161,7 +161,7 @@ export default function Dashboard() {
 									<div className="effect bg-warning"></div>
 								</div>
 							</div>
-							<div className="col-sm-6">
+							<div className="col-sm-4">
 								<div className="card avtivity-card">
 									<div className="card-body">
 										<div className="media align-items-center">
@@ -182,7 +182,7 @@ export default function Dashboard() {
 									<div className="effect bg-warning"></div>
 								</div>
 							</div>
-							<div className="col-sm-6">
+							<div className="col-sm-4">
 								<div className="card avtivity-card">
 									<div className="card-body">
 										<div className="media align-items-center">
