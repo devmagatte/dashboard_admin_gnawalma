@@ -25,13 +25,6 @@ function SideBarInner() {
 					</li>
 					
                 </ul>
-				<div className="add-menu-sidebar">
-					<img src="images/calendar.png" alt="" className="me-3" />
-					<a href="workoutplan.html" className="font-w500 mb-0">calendrier du jour</a>
-				</div>
-				<div className="copyright">
-					<p>Made with <span className="heart"></span> by Gnawalma</p>
-				</div>
 			</div>
     </div>    
     </>

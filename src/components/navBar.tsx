@@ -51,18 +51,6 @@ function NavBarInner() {
                             </div>
                         </div>
                         <ul className="navbar-nav header-right">
-							<li className="nav-item">
-								<form>
-									<div className="input-group search-area d-lg-inline-flex d-none me-3">
-									  <span className="input-group-text" id="header-search">
-											<button className="bg-transparent border-0" type="button" aria-label="header-search">
-												<i className="flaticon-381-search-2"></i>
-											</button>
-									  </span>
-									  <input type="text" className="form-control" placeholder="Search here" aria-label="Username" aria-describedby="header-search" />
-									</div>
-								</form>
-							</li>
 							<li className="nav-item dropdown notification_dropdown">
                                 <a className="nav-link bell dz-theme-mode" href="#" onClick={(e) => e.preventDefault()} aria-label="theme-mode">
 									<i id="icon-light" className="fas fa-sun"></i>
